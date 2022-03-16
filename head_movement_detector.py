@@ -10,6 +10,7 @@ ind2text = {
     }
 
 def deg2dir(deg):
+
     if (-22.5 < deg <= 22.5):
         return 0
     elif (22.5 < deg < 112.5):
@@ -48,12 +49,9 @@ mp_face_mesh = mp.solutions.face_mesh
 
 # For webcam input:
 drawing_spec = mp_drawing.DrawingSpec(thickness=0.5, circle_radius=1)
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 text = ''
-
-# r = 0.18533697614631156
-# f_d = 0.4210272218051749
 
 landmarks = [i for i in range(478)]
 
@@ -97,7 +95,7 @@ with mp_face_mesh.FaceMesh(
 
          diff_polar = cart2polar(diff)
          
-         if diff[:,0].max() < 0.01:
+         if np.abs(diff[:,0]).max() < 0.01:
              text = ''
          else:
              diff_polar_hist = genhist(diff_polar)
